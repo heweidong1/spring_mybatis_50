@@ -19,7 +19,7 @@ public class KgcImportBeanDefiniionRegistart implements ImportBeanDefinitionRegi
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata,
                                         BeanDefinitionRegistry registry) {
 
-        //指定要将KgcMapperFactoryBean 放到后置处理器中
+        //指定要将KgcMapperFactoryBean beandefintion中 
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.
                 genericBeanDefinition(KgcMapperFactoryBean.class);
 

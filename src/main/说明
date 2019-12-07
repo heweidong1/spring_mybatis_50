@@ -1,0 +1,48 @@
+package com.kgc.mybatis;
+
+import java.lang.reflect.Proxy;
+
+public class KgcSession
+{
+    public static Object getMapper(Class clazz)
+    {
+        //将要产生代理对象的类传进来  这个方法将生成代理对象
+        /**
+         * ClassLoader loader,
+         * Class<?>[] interfaces,
+         * InvocationHandler h
+         */
+        Class[]clazzs = new Class[]{clazz};
+        Object object =  Proxy.newProxyInstance(KgcSession.class.getClassLoader(),
+               clazzs【被代理接口】,new KgcInvocationHandler());
+        return object;
+    }
+}
+
+KgcInvocationHandler：
+代理类中的逻辑，在该项目中，因为没有实现类，所以不用传入实现类【 被代理类】 invoke中的逻辑就是 代理类的全逻辑：
+
+
+
+但是先在别的项目中的jdk动态 在自己规定 InvocationHandler  要传入实现接口的类 因为要调用逻辑方法：如下
+public class myHandler implements IncocationHandler{
+    private Object object;
+    
+    public myHandler(Object object)
+    {
+      this.object = object;
+    }
+    
+    @Overrride
+    public Object invoke(Object proxy,Method method,Object[]args)throws Throwable{
+      system.out.print("前置方法")；
+      //调用目标方法 
+      Object invoke = method.invoke(objecr,args);
+      system.out.prnt("后置方法");
+      //返回目标方法的结果
+      return invoke;
+    
+    }
+
+
+}

@@ -21,7 +21,30 @@ public class KgcSession
 
 KgcInvocationHandler：
 代理类中的逻辑，在该项目中，因为没有实现类，所以不用传入实现类【 被代理类】 invoke中的逻辑就是 代理类的全逻辑：
+package com.kgc.mybatis;
 
+import org.apache.ibatis.annotations.Select;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
+public class KgcInvocationHandler implements InvocationHandler {
+    //此方法中定义的代码逻辑 会放到代理对象的 代理方法中
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        //parse get sql 获取sql语句
+        //method 接口中方法对象 可以通过方法对象 获取方法上的注解 从而拿到sql语句
+
+        Select annotation = method.getAnnotation(Select.class);
+        String sql = annotation.value()[0];
+
+        //执行sql语句 jdbc
+        System.out.println("sql----------"+sql);
+
+        return null;
+    }
+}
 
 
 但是先在别的项目中的jdk动态 在自己规定 InvocationHandler  要传入实现接口的类 因为要调用逻辑方法：如下
